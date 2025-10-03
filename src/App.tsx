@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-export function UseWriterDemo() {
+ function App() {
   const [availability, setAvailability] = useState<"unavailable" | "available" | "downloadable" | "downloading" | null>(null);
   const [writer, setWriter] = useState<any>(null);
 
@@ -68,3 +68,5 @@ export function UseWriterDemo() {
     </div>
   );
 }
+
+export default App;
