@@ -6,6 +6,7 @@ function App() {
   >(null);
   const [writer, setWriter] = useState<any>(null);
 
+  const [content, setContent] = useState();
   useEffect(() => {
     if (!("Writer" in self)) return;
     // availability() is async—wrap in IIFE
@@ -57,7 +58,7 @@ function App() {
         });
       }
       console.log(w);
-      
+
       setWriter(w);
     } catch (err) {
       console.error("Failed to create Writer", err);
@@ -73,14 +74,32 @@ function App() {
     };
   }, [writer]);
 
+  const generateContent = async () => {
+    const result = await writer.write(
+      "An inquiry to my bank about how to enable wire transfers on my account.",
+      {
+        context: "I'm a longstanding customer",
+      }
+    );
+    console.log("generateContent result", result);
+
+    setContent(result);
+  };
+
   return (
     <div>
       <p>Availability: {availability ?? "checking…"}</p>
       <button onClick={startWriter} disabled={availability === "unavailable"}>
         Start Writer
       </button>
+      <button
+        onClick={generateContent}
+        disabled={availability === "unavailable"}
+      >
+        generateContent
+      </button>
 
-      {/* <p>{writer}</p> */}
+      <p>{content}</p>
     </div>
   );
 }
