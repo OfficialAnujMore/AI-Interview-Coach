@@ -84,7 +84,7 @@ function App() {
     };
   }, [writer]);
 
-  const generateContent = async () => {};
+  // const generateContent = async () => {};
 
   return (
     <div>
