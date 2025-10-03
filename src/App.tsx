@@ -59,6 +59,16 @@ function App() {
       }
       console.log(w);
 
+      const result = await w.write(
+        "An inquiry to my bank about how to enable wire transfers on my account.",
+        {
+          context: "I'm a longstanding customer",
+        }
+      );
+      console.log("generateContent result", result);
+
+      setContent(result);
+
       setWriter(w);
     } catch (err) {
       console.error("Failed to create Writer", err);
@@ -74,17 +84,7 @@ function App() {
     };
   }, [writer]);
 
-  const generateContent = async () => {
-    const result = await writer.write(
-      "An inquiry to my bank about how to enable wire transfers on my account.",
-      {
-        context: "I'm a longstanding customer",
-      }
-    );
-    console.log("generateContent result", result);
-
-    setContent(result);
-  };
+  const generateContent = async () => {};
 
   return (
     <div>
@@ -92,12 +92,12 @@ function App() {
       <button onClick={startWriter} disabled={availability === "unavailable"}>
         Start Writer
       </button>
-      <button
+      {/* <button
         onClick={generateContent}
         disabled={availability === "unavailable"}
       >
         generateContent
-      </button>
+      </button> */}
 
       <p>{content}</p>
     </div>
