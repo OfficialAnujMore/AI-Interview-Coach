@@ -56,6 +56,8 @@ function App() {
           },
         });
       }
+      console.log(w);
+      
       setWriter(w);
     } catch (err) {
       console.error("Failed to create Writer", err);
@@ -78,7 +80,7 @@ function App() {
         Start Writer
       </button>
 
-      <p>{writer}</p>
+      {/* <p>{writer}</p> */}
     </div>
   );
 }
