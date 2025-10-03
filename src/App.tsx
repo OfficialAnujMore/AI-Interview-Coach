@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 
- function App() {
-  const [availability, setAvailability] = useState<"unavailable" | "available" | "downloadable" | "downloading" | null>(null);
+function App() {
+  const [availability, setAvailability] = useState<
+    "unavailable" | "available" | "downloadable" | "downloading" | null
+  >(null);
   const [writer, setWriter] = useState<any>(null);
 
   useEffect(() => {
@@ -11,6 +13,8 @@ import { useCallback, useEffect, useState } from "react";
       try {
         console.log("Writer supported");
         const a = await (self as any).Writer.availability();
+        console.log("Writer.availability() status", a);
+
         setAvailability(a);
       } catch (err) {
         console.error("Failed to check Writer availability", err);
@@ -24,7 +28,8 @@ import { useCallback, useEffect, useState } from "react";
     if (availability === "unavailable" || availability == null) return;
 
     const options = {
-      sharedContext: "This is an email to acquaintances about an upcoming event.",
+      sharedContext:
+        "This is an email to acquaintances about an upcoming event.",
       tone: "casual",
       format: "plain-text",
       length: "medium",
@@ -33,8 +38,13 @@ import { useCallback, useEffect, useState } from "react";
     try {
       let w;
       if (availability === "available") {
+        console.log('if (availability === "available") {', availability);
+
         w = await (self as any).Writer.create(options);
+        console.log("  w = await (self as any).Writer.create(options);", w);
       } else {
+        console.log(); // downloadable / downloading — monitor progress;
+
         // downloadable / downloading — monitor progress
         w = await (self as any).Writer.create({
           ...options,
@@ -55,7 +65,9 @@ import { useCallback, useEffect, useState } from "react";
   useEffect(() => {
     return () => {
       // cleanup if you created a writer
-      try { writer?.destroy?.(); } catch {}
+      try {
+        writer?.destroy?.();
+      } catch {}
     };
   }, [writer]);
 
@@ -65,6 +77,8 @@ import { useCallback, useEffect, useState } from "react";
       <button onClick={startWriter} disabled={availability === "unavailable"}>
         Start Writer
       </button>
+
+      <p>{writer}</p>
     </div>
   );
 }
